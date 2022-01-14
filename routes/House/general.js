@@ -7,7 +7,7 @@ houseController.get('/getAllHouses',(req,res)=>{
 })
 
 houseController.get('/getHouse/:Id',(req,res)=>{
-    res.send({data: House.findOne(req.params.Id)})
+     res.send({data: House.findOne(req.params.Id)})
 })
 
 module.exports=houseController

@@ -17,8 +17,7 @@ const jwt=require('jsonwebtoken')
          if (user) {
             var token = jwt.sign(JSON.stringify(user), process.env.jwtSecret)
             var payload = { ...user, password: null }
-            console.log(payload);
-            return {
+             return {
                 token: token,
                 user: payload
             }

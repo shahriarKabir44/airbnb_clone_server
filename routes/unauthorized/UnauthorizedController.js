@@ -13,8 +13,7 @@ unauthorizedController.post('/Login',(req,res)=>{
 
 })
 unauthorizedController.get('/IsAuthorized', verifyAuthoToken, (req,res)=>{
-    console.log(req.user);
-    res.status(200).send({ data: req.user })
+     res.status(200).send({ data: req.user })
 })
 
 module.exports = unauthorizedController
