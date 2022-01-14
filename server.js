@@ -35,4 +35,6 @@ function startExpress() {
     app.use('/authorized/booking',verifyToken,require('./routes/authorized/ReservationController'))
 
     app.use('/unauthorized',require('./routes/unauthorized/UnauthorizedController'))
+
+    app.use('/house/general/',require('./routes/House/general'))
 }
