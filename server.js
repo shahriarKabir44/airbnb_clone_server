@@ -5,10 +5,18 @@ const cors=require('cors')
 
 const verifyToken=require('./routes/unauthorized/jwtHandler')
 
-
+const mongoose=require('mongoose')
 const cluster = require('cluster');
 
 const totalCPUs = require('os').cpus().length;
+
+mongoose.connect(process.env.CONNECTION_STRING,
+    {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false
+    })
 
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
@@ -36,5 +44,5 @@ function startExpress() {
 
     app.use('/unauthorized',require('./routes/unauthorized/UnauthorizedController'))
 
-    app.use('/house/general/',require('./routes/House/general'))
+    app.use('/house/general/',require('./routes/general'))
 }

@@ -10,7 +10,7 @@ const jwt=require('jsonwebtoken')
         }
     ]
     static findOne({ email, password }) {
-        return this.this.this.userList.filter(user => user.email == email && user.password == password)[0]
+        return this.userList.filter(user => user.email == email && user.password == password)[0]
     }
     static login({ email, password }) {
         var user = this.findOne({ email: email, password: password })

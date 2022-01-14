@@ -1,4 +1,4 @@
-const House=require('../../models/House')
+const House=require('../models/House')
 
 const houseController=require('express').Router()
 
