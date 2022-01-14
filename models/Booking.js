@@ -2,33 +2,7 @@
 const House=require('./House')
 
 class Booking{
-    static bookings=[{
-        locationId:0,
-            startDate:(new Date())*1,
-            endDate:(new Date())*1+24*3600*3 ,
-            userId:0,
-            Id: 0,
-            status:1,
-            cost:3000
-    },{
-        locationId:1,
-            startDate:(new Date())*1,
-            endDate:(new Date())*1+24*3600*3 ,
-            userId:0,
-            Id: 0,
-            status:1,
-            cost:3000
-    }]
-    static getBookingList({userId}){
-        let res=[]
-        this.bookings.forEach(booking=>{
-            if(booking.userId==userId){
-                booking['Place']=House.findOne(booking.locationId)
-            }
-            res.push(booking)
-         })
-         return res
-    }
+     
     static isReserved({userId, location}){
         for(let booking of this.bookings){
              if(booking.userId==userId && booking.locationId==location && booking.status){

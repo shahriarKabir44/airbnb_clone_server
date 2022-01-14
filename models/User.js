@@ -1,19 +1,14 @@
 const jwt=require('jsonwebtoken')
+
+const userSchema=require('../schemas/userSchema')
+
  class User {
-     static users= [
-        {
-            name: "abcd",
-            email: "p@p",
-            password: "abcd",
-            Id:0
-    
-        }
-    ]
-    static findOne({ email, password }) {
-        return this.userList.filter(user => user.email == email && user.password == password)[0]
+      
+    async findOne(query) {
+        return await userSchema.findOne(query)
     }
-    static login({ email, password }) {
-        var user = this.findOne({ email: email, password: password })
+    async login({ email, password }) {
+        var user = await this.findOne({ email: email, password: password })
          if (user) {
             var token = jwt.sign(JSON.stringify(user), process.env.jwtSecret)
             var payload = { ...user, password: null }
@@ -24,19 +19,20 @@ const jwt=require('jsonwebtoken')
         }
         else return null
     }
-    static register({ email, password }) {
-        if (!this.userList.filter(user => user.email == email).length) {
+    async register({ email, password }) {
+        if (!await this.findOne({ email: email, password: password })) {
             var newUser = {
                 email: email,
                 password: password,
-                Id: this.userList.length
             }
             this.this.userList.push(newUser)
             var token = jwt.sign(JSON.stringify(newUser), process.env.jwtSecret)
             var payload = { ...newUser, password: null }
+            let newData=new userSchema(newUser)
+            await newData.save()
             return {
                 token: token,
-                user: payload
+                user: {...payload,Id: newData._id}
             }
         }
         else {
