@@ -25,14 +25,13 @@ const userSchema=require('../schemas/userSchema')
                 email: email,
                 password: password,
             }
-            this.this.userList.push(newUser)
-            var token = jwt.sign(JSON.stringify(newUser), process.env.jwtSecret)
+             var token = jwt.sign(JSON.stringify(newUser), process.env.jwtSecret)
             var payload = { ...newUser, password: null }
             let newData=new userSchema(newUser)
             await newData.save()
             return {
                 token: token,
-                user: {...newData }
+                user: {...newData['_doc'],password:null }
             }
         }
         else {

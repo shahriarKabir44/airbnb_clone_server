@@ -11,12 +11,7 @@ const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 
 mongoose.connect(process.env.CONNECTION_STRING,
-    {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false
-    })
+    { useNewUrlParser: true, useUnifiedTopology: true })
 
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {

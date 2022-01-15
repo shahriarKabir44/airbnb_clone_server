@@ -9,5 +9,5 @@ var bookingSchema = new mongoose.Schema({
     cost:{ type: String }
 })
 
-const House = mongoose.model('House', bookingSchema)
-module.exports = House
+const Booking  = mongoose.model('Booking', bookingSchema)
+module.exports = Booking 

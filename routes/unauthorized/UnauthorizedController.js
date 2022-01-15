@@ -7,11 +7,12 @@ const unauthorizedController=require('express').Router()
 
 let user=new User()
 
-unauthorizedController.post('/Register',(req,res)=>{
-    res.send({data:user.register(req.body)})
+unauthorizedController.post('/Register',async (req,res)=>{
+    let data=await user.register(req.body)
+     res.send({data:data})
 })
-unauthorizedController.post('/Login',(req,res)=>{
-    res.send({data:user.login(req.body)})
+unauthorizedController.post('/Login',async (req,res)=>{
+    res.send({data:await user.login(req.body)})
 
 })
 unauthorizedController.get('/IsAuthorized', verifyAuthoToken, (req,res)=>{
