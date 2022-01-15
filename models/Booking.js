@@ -1,23 +1,32 @@
 
 const House=require('./House')
-
+const bookingSchema=require('../schemas/bookingSchema')
 class Booking{
+    constructor(){
+        this.House=new House()
+    }
      
-    static isReserved({userId, location}){
-        for(let booking of this.bookings){
-             if(booking.userId==userId && booking.locationId==location && booking.status){
-                return {
-                    isBooked: true,
-                    data: booking
-                }
+    async isReserved({userId, location}){
+
+        let result=await bookingSchema.findOne({ $and:[
+            {userId:userId},
+            {locationId: location},
+            {status: {$eq: 1}}
+        ]})
+
+        if(!result ){
+            return {
+                isBooked: false,
+                data: null
             }
         }
         return {
-            isBooked: false,
-            data: null
+            isBooked: true,
+            data: result
         }
+         
     }
-    static createBooking({locationId,startDate,endDate,userId,cost }){
+    async createBooking({locationId,startDate,endDate,userId,cost }){
         if(this.isReserved({userId:userId,location:locationId}).isBooked){
             return {
                 success: 0,
@@ -29,29 +38,31 @@ class Booking{
             startDate:startDate*1,
             endDate:endDate*1 ,
             userId:userId,
-            Id: this.bookings.length,
             status:1,
             cost:cost
         }
-        this.bookings.push(newBooking)
+        let newData=new bookingSchema(newBooking)
+        await newData.save()
+
          return {
             success: 1,
-            data:newBooking
+            data:{...newData}
         }
     }
-    static cancelBooking({locationId, userId,bookingId}){
+    async cancelBooking({locationId, userId,bookingId}){
         if(!this.isReserved({userId:userId,location:locationId})){
             return {
                 success:0,
                 message: "Room is not reserved!"
             }
         }
-        for(let booking in this.bookings){
-            if(booking.Id==bookingId){
-                booking.status=0
-                break
-            }
-        }
+
+        await bookingSchema.findOneAndUpdate({$and:[
+            {_id: bookingId},
+            {status:{$eq:1}}
+        ]},{status:1})
+
+         
         return {
             success:1,
             message:"Reservation successfully cancelled!"

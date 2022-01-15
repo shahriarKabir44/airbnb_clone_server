@@ -5,7 +5,7 @@ class House{
      async getAll(query){
         return await houseSchema.find()
     }
-     async findOne(Id){
+     async findOne(query){
          return await houseSchema.findOne({query})
     }
 }

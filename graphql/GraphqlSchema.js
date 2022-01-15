@@ -19,12 +19,12 @@ const Booking=require('../models/Booking')
 const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
-        id: { type: GraphQLID },
+        _id: { type: GraphQLID },
         email: { type: GraphQLString },
         Owned: {
             type: new GraphQLList(HouseType),
             resolve(parent, args) {
-                return House.findOne({ owner: parent.id })
+                return House.findOne({ owner: parent._id })
             }
         }
     })
@@ -33,7 +33,7 @@ const UserType = new GraphQLObjectType({
 const HouseType= new GraphQLObjectType({
     name: 'House',
     fields: () => ({
-        id: { type: GraphQLID },
+        _id: { type: GraphQLID },
         picture:{ type: GraphQLString },
         type: { type: GraphQLString },
         town:{ type: String },

@@ -32,7 +32,7 @@ const userSchema=require('../schemas/userSchema')
             await newData.save()
             return {
                 token: token,
-                user: {...payload,Id: newData._id}
+                user: {...newData }
             }
         }
         else {
