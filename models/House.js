@@ -12,7 +12,7 @@ class House{
         let newData=new houseSchema(hostingInfo)
         await newData.save()
         return {
-            duccess: true,
+            success: true,
             data:newData['_doc']
         }
     }
