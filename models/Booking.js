@@ -49,6 +49,11 @@ class Booking{
             data:{...newData}
         }
     }
+
+    async getBookings(query){
+        return await bookingSchema.find(query)
+    }
+
     async cancelBooking({locationId, userId,bookingId}){
         if(!this.isReserved({userId:userId,location:locationId})){
             return {

@@ -23,7 +23,6 @@ function base64_encode(file) {
 HouseController.post('/hostHouse',uploadImg, async (req, res) => {
     let base64img=base64_encode(req.file.path)
     fs.unlinkSync(req.file.path)
-    console.log();
     let newData={...JSON.parse(req.headers['data']),picture: base64img}
     house.createnew(newData)
         .then(data=>{

@@ -1,6 +1,6 @@
 const express=require('express')
 require('dotenv').config()
-
+const graphqlHTTP = require('express-graphql');
 const cors=require('cors')
 
 const verifyToken=require('./routes/unauthorized/jwtHandler')
@@ -35,9 +35,16 @@ function startExpress() {
     app.get('/',(req,res)=>{
         res.send('efwnnfer')
     })
-    app.use('/authorized/booking',verifyToken,require('./routes/authorized/ReservationController'))
+    app.use('/authorized/booking',verifyToken, require('./routes/authorized/ReservationController'))
     app.use('/authorized/hosting',verifyToken, require('./routes/authorized/HouseController'))
     app.use('/unauthorized',require('./routes/unauthorized/UnauthorizedController'))
 
     app.use('/house/general/',require('./routes/general'))
+
+    app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
+        {
+            schema: require('./graphql/GraphqlSchema'),
+            graphiql: true
+        }
+    )));
 }
