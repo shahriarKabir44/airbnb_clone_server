@@ -35,11 +35,12 @@ class Booking{
         }
         let newBooking={
             locationId:locationId,
-            startDate:startDate*1,
-            endDate:endDate*1 ,
+            startDate:startDate*1+'',
+            endDate:endDate*1+'' ,
             userId:userId,
-            status:1,
-            cost:cost
+            status:1+'',
+            cost:cost+'',
+            time: (new Date())*1+''
         }
         let newData=new bookingSchema(newBooking)
         await newData.save()

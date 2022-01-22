@@ -6,7 +6,8 @@ var bookingSchema = new mongoose.Schema({
     endDate:{ type: String },
     userId:{ type:  mongoose.Schema.ObjectId },
      status:{ type: String },
-    cost:{ type: String }
+    cost:{ type: String },
+    time:{type: String}
 })
 
 const Booking  = mongoose.model('Booking', bookingSchema)

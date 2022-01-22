@@ -66,6 +66,7 @@ const ReservationType=new GraphQLObjectType({
         userId:{ type: GraphQLID },
         status:{ type: GraphQLString },
         cost:{ type: GraphQLString },
+        time:{ type: GraphQLString },
         getLocationInfo:{
             type: HouseType,
             resolve(parent,args){
