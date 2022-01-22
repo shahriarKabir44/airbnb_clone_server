@@ -19,5 +19,11 @@ class House{
             data:newData['_doc']
         }
     }
+    async findByIdAndUpdate(id,url){
+        await houseSchema.findByIdAndUpdate(id,{picture: url})
+        return {data:{
+            success: true
+        }}
+    }
 }
 module.exports= House

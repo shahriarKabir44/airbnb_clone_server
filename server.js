@@ -41,7 +41,7 @@ function startExpress() {
 
     app.use('/house/general/',require('./routes/general'))
 
-    app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
+    app.use('/graphql'  , graphqlHTTP.graphqlHTTP(req => (
         {
             schema: require('./graphql/GraphqlSchema'),
             graphiql: true

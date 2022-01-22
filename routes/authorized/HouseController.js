@@ -1,36 +1,29 @@
 const House = require('../../models/House')
-const multer=require('multer')
-
-const fs=require('fs')
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads');
-      },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-const uploadImg = multer({storage: storage}).single('file');
-
+ 
 const HouseController = require('express').Router()
 let house=new House()
 
-function base64_encode(file) {
-    return "data:image/gif;base64,"+fs.readFileSync(file, 'base64');
-}
 
-HouseController.post('/hostHouse',uploadImg, async (req, res) => {
-    let base64img=base64_encode(req.file.path)
-    fs.unlinkSync(req.file.path)
-    let newData={...JSON.parse(req.headers['data']),picture: base64img}
+
+HouseController.post('/hostHouse',  async (req, res) => {
+     
+    let newData=req.body
     house.createnew(newData)
         .then(data=>{
             res.send({data:{
-                success: true
+                success: true,
+                info: data
             }})
         })
      
+})
+
+HouseController.post('/updateImage',(req,res)=>{
+    let {_id, imageURL}=req.body
+    house.findByIdAndUpdate(_id,imageURL)
+        .then((data)=>{
+            res.send({data: data})
+        })  
 })
 
 
