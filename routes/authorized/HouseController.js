@@ -24,11 +24,12 @@ HouseController.post('/hostHouse',uploadImg, async (req, res) => {
     let base64img=base64_encode(req.file.path)
     fs.unlinkSync(req.file.path)
     console.log();
-    fs.writeFileSync('routes/authorized/test.txt',base64img)
     let newData={...JSON.parse(req.headers['data']),picture: base64img}
     house.createnew(newData)
         .then(data=>{
-            res.send({data:data})
+            res.send({data:{
+                success: true
+            }})
         })
      
 })
