@@ -8,6 +8,7 @@ let house=new House()
 HouseController.post('/hostHouse',  async (req, res) => {
      
     let newData=req.body
+    delete newData._id
     house.createnew(newData)
         .then(data=>{
             res.send({data:{

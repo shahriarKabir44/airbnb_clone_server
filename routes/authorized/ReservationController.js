@@ -14,7 +14,6 @@ reservationController.post('/CancelReservation',(req,res)=>{
 })
 
 reservationController.post('/IsReserved',(req,res)=>{
-    console.log(req.body);
     res.send({data:booking.isReserved(req.body)})
 })
 

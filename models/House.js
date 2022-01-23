@@ -12,7 +12,14 @@ class House{
         return await houseSchema.find({query})
     }
     async createnew(hostingInfo){
-        let newData=new houseSchema(hostingInfo)
+        let newData=new houseSchema({
+            type:hostingInfo.type,
+            town:hostingInfo.town,
+            title:hostingInfo.title,
+            description:hostingInfo.description,
+            price: hostingInfo.price,
+            ownerId:hostingInfo.ownerId,
+        })
         await newData.save()
         return {
             success: true,
