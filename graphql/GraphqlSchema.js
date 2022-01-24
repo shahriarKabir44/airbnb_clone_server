@@ -94,6 +94,15 @@ const RootQueryType=new GraphQLObjectType({
               //  return user.findOne({_id: context.user._id})
               return user.findOne({_id: args.id})
             }
+        },
+        viewGuests:{
+            type: new GraphQLList(ReservationType),
+            args: {
+                houseId: {type: GraphQLID}
+            },
+            resolve(parent,args){
+                return booking.findReservationsOfHouse(args.houseId)
+            }
         }
     }
 })

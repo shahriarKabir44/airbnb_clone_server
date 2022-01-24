@@ -13,7 +13,6 @@ class Booking{
             {locationId: location},
             {status: {$eq: "1"}}
         ]})
-        console.log(result);
         if(!result ){
             return {
                 isBooked: false,
@@ -25,6 +24,9 @@ class Booking{
             data: result
         }
          
+    }
+    async findReservationsOfHouse(houseId){
+        return await bookingSchema.find({locationId:houseId})
     }
     async createBooking({locationId,startDate,endDate,userId,cost }){
         if(this.isReserved({userId:userId,location:locationId}).isBooked){
