@@ -10,7 +10,8 @@ const userSchema=require('../schemas/userSchema')
     async login({ email, password }) {
         var user = await this.findOne({ email: email, password: password })
          if (user) {
-            var token = jwt.sign(JSON.stringify(user), process.env.jwtSecret)
+             user=user._doc
+            var token = jwt.sign(JSON.stringify({...user,password:null}), process.env.jwtSecret)
             var payload = { ...user, password: null }
              return {
                 token: token,
@@ -25,10 +26,10 @@ const userSchema=require('../schemas/userSchema')
                 email: email,
                 password: password,
             }
-             var token = jwt.sign(JSON.stringify(newUser), process.env.jwtSecret)
-            var payload = { ...newUser, password: null }
+            
             let newData=new userSchema(newUser)
             await newData.save()
+             var token = jwt.sign({...newData['_doc'],password:null }, process.env.jwtSecret)
             return {
                 token: token,
                 user: {...newData['_doc'],password:null }

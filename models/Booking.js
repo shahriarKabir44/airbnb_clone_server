@@ -11,9 +11,9 @@ class Booking{
         let result=await bookingSchema.findOne({ $and:[
             {userId:userId},
             {locationId: location},
-            {status: {$eq: 1}}
+            {status: {$eq: "1"}}
         ]})
-
+        console.log(result);
         if(!result ){
             return {
                 isBooked: false,
